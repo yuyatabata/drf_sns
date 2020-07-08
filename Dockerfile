@@ -5,5 +5,5 @@ WORKDIR /server
 ADD . /server/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-RUN EXPOSE 8000
-RUN EXPOSE 8080
+EXPOSE 8000
+EXPOSE 8080
