@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'core.apps.CoreConfig',
+    'api_user.apps.ApiUserConfig',
+    'api_dm.apps.ApiDmConfig',
 ]
 
 MIDDLEWARE = [
@@ -105,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'ASIA/TOKYO'
 
 USE_I18N = True
 
@@ -118,3 +123,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
+MEDIA_URL = '/media/'
