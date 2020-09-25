@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'ASIA/TOKYO'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
@@ -125,6 +125,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+AUTH_USER_MODEL = 'core.User'
 
 STATIC_URL = '/static/'
 
