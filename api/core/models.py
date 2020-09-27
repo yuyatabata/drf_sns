@@ -70,7 +70,7 @@ class FriendRequest(models.Model):
 
 class Message(models.Model):
     
-    message = models.Charfield(max_length=140)
+    message = models.CharField(max_length=140)
     sender = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='sender',
         on_delete=models.CASCADE 
