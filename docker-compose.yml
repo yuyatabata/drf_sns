@@ -7,7 +7,7 @@ services:
     container_name: api
     command: python manage.py runserver 0.0.0.0:8000
     ports:
-      - 8000:8000
+      - 8000:3000
     tty: true
     stdin_open: true
     volumes:
@@ -21,9 +21,9 @@ services:
       - api
     environment: 
       API_HOST: api
-      API_PORT: 8000
+      API_PORT: 3000
     ports:
-      - 8080:8080
+      - 8080:3000
     tty: true
     stdin_open: true
     volumes:
