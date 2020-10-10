@@ -9,7 +9,6 @@ import { FiLogOut } from 'react-icons/fi';
 import { withCookies } from 'react-cookie';
 
 const useStyles = makeStyles((theme) => ({
-
     bg: {
       marginRight: theme.spacing(1),
     },
