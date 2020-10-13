@@ -123,7 +123,7 @@ const Login = (props) => {
     const login = async(event) => {
         event.preventDefault()
         console.log('state',state);
-        const csrf_token = axios.get('/csrf-token');;
+        const csrf_token = axios.get('/csrf-token');
         console.log('csrf_token',csrf_token);
         if(state.isLoginView) {
             try {
@@ -147,7 +147,10 @@ const Login = (props) => {
                 dispatch({type: START_FETCH})
                 console.log('START_FETCH');
                 await axios.post('http://127.0.0.1:8000/api/user/create/', state.credentialsReg, {
-                headers: {'Content-Type': 'application/json'}})
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrf_token,
+                }})
                 dispatch({type: FETCH_SUCCESS})
                 dispatch({type: TOGGLE_MODE})
             } catch {
