@@ -44,16 +44,28 @@ const ApiContextProvider = (props) => {
                         'Authorization': `Token ${token}`
                     }
                 })
-                setProfiles(res.data)
+                setProfiles(res.data)}
             catch {
                 console.log("error")
             }
+        }
+
+        const getInbox = async() => {
+            try {
+                const res = await axios.get('http://localhost:8000/api/user/profille/', {
+                    headers: {
+                        'Authorization': `Token ${token}`
+                    }
+                })
+                setInbox(res.data)}
+            catch {
+                console.log('error')
             }
         }
-        const getInbox = async() => {
-            
-        }
-    })
+        getMyProfile()
+        getProfile()
+        getInbox()
+    },[token, profile.id])
 
     return (
         <div>
