@@ -8,7 +8,7 @@ const ApiContextProvider = (props) => {
     const token = props.cookies.get('current-token')
     const [profile, setProfile] = useState([])
     const [profiles, setProfiles] = useState([])
-    const [editedProfile, setEditedProfile] = useState({"id":'', "nickName":''})
+    const [editedProfile, setEditedProfile] = useState({id:'', nickName:''})
     const [askList, setAskList] = useState([])
     const [askListFull, setAskListFull] = useState([])
     const [inbox, setInbox] = useState([])
@@ -66,6 +66,44 @@ const ApiContextProvider = (props) => {
         getProfile()
         getInbox()
     },[token, profile.id])
+
+    const createProfile = async() => {
+        const createData = new FormData()
+        createData.append("nickName", editedProfile.nickName)
+        cover.name && createData.append('img', cover, cover.name)
+        try {
+            const res = await axios.post('http://localhost:8000/api/user/profile/', createData, {
+                headers: {
+                    'Contet-Type': 'application/json',
+                    'Authorization': `Token ${token}`
+                }
+            })
+            setProfile(res.data)
+            setProfile({id:res.data.id, nickName: res.data.nickName})
+        }
+        catch {
+            console.log("error")
+        }
+    }
+
+    const deleteProfile = async() => {
+        try {
+            await axios.delete(`http://localhost:8000/api/user/profile/${profile.id}/`, {
+                headers: {
+                    'Contet-Type': 'application/json',
+                    'Authorization': `Token ${token}`
+                }
+            })
+            setProfiles(profile.filter(dev => dev.id !== profile.id))
+            setProfile([])
+            setProfile({id:'', nickName: ''})
+            setCover([])
+            setAskList([])
+        }
+        catch {
+            console.log("error")
+        }
+    }
 
     return (
         <div>
