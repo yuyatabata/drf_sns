@@ -79,7 +79,7 @@ const ApiContextProvider = (props) => {
                 }
             })
             setProfile(res.data)
-            setProfile({id:res.data.id, nickName: res.data.nickName})
+            setEditedProfile({id:res.data.id, nickName: res.data.nickName})
         }
         catch {
             console.log("error")
@@ -96,13 +96,101 @@ const ApiContextProvider = (props) => {
             })
             setProfiles(profile.filter(dev => dev.id !== profile.id))
             setProfile([])
-            setProfile({id:'', nickName: ''})
+            setEditedProfile({id:'', nickName: ''})
             setCover([])
             setAskList([])
         }
         catch {
             console.log("error")
         }
+    }
+
+    const editedProfile = async() => {
+        const editData = new FormData()
+        editData.append("nickName", editedProfile.nickName)
+        cover.name && editData.append('img', cover, cover.name)
+        try {
+            const res = await axios.put(`http://localhost:8000/api/user/profile/${profile.id}/`,editData, {
+                headers: {
+                    'Contet-Type': 'application/json',
+                    'Authorization': `Token ${token}`
+                }
+            })
+            setProfile(res.data)
+        }
+        catch {
+            console.log("error")
+        }
+    }
+
+    const newRequestFriend = async(askData) => {
+        try {
+            const res = await axios.post(`http://localhost:8000/api/user/approval/`, askData, {
+                headers: {
+                    'Contet-Type': 'application/json',
+                    'Authorization': `Token ${token}`
+                }
+            })
+            setAskListFull([...askListFull, res.data])
+        }
+        catch {
+            console.log("error")
+        }
+    }
+
+    const sendDMCount = async(uploadDM) => {
+        try {
+            await axios.post(`http://localhost:8000/api/dm/message/`, uploadDM , {
+                headers: {
+                    'Contet-Type': 'application/json',
+                    'Authorization': `Token ${token}`
+                }
+            })
+        }
+        catch {
+            console.log("error")
+        }        
+    }
+
+    const changeApprovalRequest = async(uploadDataAsk, ask) => {
+        try {
+            const res = await axios.put(`http://localhost:8000/api/user/approval/${ask.id}/`, uploadDataAsk , {
+                headers: {
+                    'Contet-Type': 'application/json',
+                    'Authorization': `Token ${token}`
+                }
+            })
+            setAskList(askList.map(item=>{item.id===ask.id ? res.data:item}))
+
+            const newDataAsk = new FormData()
+            newDataAsk.append("askTo", ask.askFrom)
+            newDataAsk.append("askFrom", true)
+
+            const newDataAskPut = new FormData()
+            newDataAskPut.append("askTo", ask.askFrom)
+            newDataAskPut.append("askFrom", ask.askTo)
+            newDataAskPut.append("approved", true)
+
+            const resp = askListFull.filter(item=> {item.askFrom === profile.userPro && item.askTo === ask.askFrom})
+
+            !resp[0] ?
+            await axios.post(`http://localhost:8000/api/user/approval/`, newDataAsk , {
+                headers: {
+                    'Contet-Type': 'application/json',
+                    'Authorization': `Token ${token}`
+                }
+            })
+            :
+            await axios.put(`http://localhost:8000/api/user/approval/${resp[0].id}/`, newDataAskPut , {
+                headers: {
+                    'Contet-Type': 'application/json',
+                    'Authorization': `Token ${token}`
+                }
+            })
+        }
+        catch {
+            console.log("error")
+        }        
     }
 
     return (
