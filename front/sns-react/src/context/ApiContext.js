@@ -164,14 +164,14 @@ const ApiContextProvider = (props) => {
 
             const newDataAsk = new FormData()
             newDataAsk.append("askTo", ask.askFrom)
-            newDataAsk.append("askFrom", true)
+            newDataAsk.append("approved", true)
 
             const newDataAskPut = new FormData()
             newDataAskPut.append("askTo", ask.askFrom)
             newDataAskPut.append("askFrom", ask.askTo)
             newDataAskPut.append("approved", true)
 
-            const resp = askListFull.filter(item=> {item.askFrom === profile.userPro && item.askTo === ask.askFrom})
+            const resp = askListFull.filter(item=> {return (item.askFrom === profile.userPro && item.askTo === ask.askFrom)})
 
             !resp[0] ?
             await axios.post(`http://localhost:8000/api/user/approval/`, newDataAsk , {
@@ -194,9 +194,24 @@ const ApiContextProvider = (props) => {
     }
 
     return (
-        <div>
-            
-        </div>
+        <ApiContext.Provider value={{
+            profile,
+            profiles,
+            cover,
+            setCover,
+            askList,
+            askListFull,
+            inbox,
+            newRequestFriend,
+            createProfile,
+            editedProfile,
+            deleteProfile,
+            changeApprovalRequest,
+            editedProfile,
+            setEditedProfile,
+        }}>
+        {props.children}
+        </ApiContext.Provider>
     )
 }
 
