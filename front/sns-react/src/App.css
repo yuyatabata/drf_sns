@@ -43,5 +43,11 @@
   margin-top: 7px;
   font-size: 25px;
   border: none;
+  outline: none;
   cursor: pointer;
+}
+
+.container {
+  margin: 40px auto;
+  max-width: 1200px;
 }

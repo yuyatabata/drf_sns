@@ -204,7 +204,7 @@ const ApiContextProvider = (props) => {
             inbox,
             newRequestFriend,
             createProfile,
-            editedProfile,
+            editProfile,
             deleteProfile,
             changeApprovalRequest,
             editedProfile,
